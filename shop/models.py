@@ -12,16 +12,12 @@ class Product(models.Model):
     
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    session_id = models.CharField(max_length=100, null = True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def get_total_price(self):
-        total_price = 0
-        cart_items = self.items.all()
-        for item in cart_items:
-            total_price += item.get_total_price()
-        return total_price
+    def __str__(self):
+        return f"Cart {self.id}"
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)

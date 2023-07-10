@@ -47,10 +47,12 @@ def subscribe_newsletter(request):
 
 
 def cart_view(request):
-    session_id = request.session.session_key  
+    session_id = request.session.session_key
     
     cart = Cart.objects.filter(session_id=session_id).first()
-
+    if not cart:
+        cart = Cart.objects.create(session_id=session_id)
+    
     total_price = 0
     cart_items = cart.items.all()
     for item in cart_items:
@@ -63,6 +65,9 @@ def cart_view(request):
     }
 
     return render(request, 'shop/cart.html', context)
+
+
+
 
 def blog(request):
     return render(request, 'shop/blog.html')
