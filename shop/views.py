@@ -28,6 +28,8 @@ def add_to_cart(request, product_id):
     return render(request, 'shop/base.html', {'cart': cart})
 
 
+
+
 def subscribe_newsletter(request):
     if request.method == "POST":
         first_name = request.POST.get('first_name')
@@ -42,6 +44,28 @@ def subscribe_newsletter(request):
         
         return render(request, 'shop/index.html')
     return render(render, 'shop/index.html')
+
+
+def cart_view(request):
+    session_id = request.session.session_key  
+    
+    cart = Cart.objects.filter(session_id=session_id).first()
+
+    total_price = 0
+    cart_items = cart.items.all()
+    for item in cart_items:
+        total_price += item.quantity * item.product.price
+
+    context = {
+        'cart': cart,
+        'cart_items': cart_items,
+        'total_price': total_price,
+    }
+
+    return render(request, 'shop/cart.html', context)
+
+def blog(request):
+    return render(request, 'shop/blog.html')
 
 
 # Create your views here.

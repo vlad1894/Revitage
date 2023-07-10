@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RevitAge Blog</title>
+    <style>
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100px; /* Adjust the size as needed */
+            height: auto;
+            margin-right: 10px; /* Add some spacing between the logo and the heading */
+        }
+
+        h1 {
+            font-size: 24px; /* Adjust the font size as needed */
+            color: #265e54;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <a href="{% url 'shop:home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+        </a>
+        <h1> A Wellness Blog</h1>
+    </div>
+
+    <div>
+        <h4>
+            Welcome to our blog! Here you'll find our latest articles and news.
+        </h4>
+    </div>
+
+</body>
+</html>

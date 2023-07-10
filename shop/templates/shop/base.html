@@ -18,6 +18,9 @@
             background-color: #134f13;
             color: #fff;
             font-weight: bold;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-left: 10px;
         }
         .logo-img {
             max-height: 150px;
@@ -40,10 +43,10 @@
                         <a class="nav-link" href="{% url 'shop:about' %}" style="font-weight: bold;">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'shop:home' %}" style="font-weight: bold;">Blog</a>
+                        <a class="nav-link" href="{% url 'shop:blog' %}" style="font-weight: bold;">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link cart-button rounded-pill" href="#" style="font-weight: bold;">
+                        <a class="nav-link cart-button rounded-pill" href="{% url 'shop:cart' %}" style="font-weight: bold;">
                             <i class="fas fa-shopping-cart mr-1"></i> Cart
                         </a>
                     </li>
