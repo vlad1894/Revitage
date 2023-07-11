@@ -54,7 +54,7 @@
     <hr style="background-color: #265e54; height: 5px; width: 50%; margin: 40px; opacity: 1;">
 </div>
 
-<h6 class="text-center" style="color: #134f13;">Featured Products</h6>
+<h4 class="text-center" style="color: #134f13;">Featured Products</h4>
 
 <div class="row mt-3">
     <div class="col-lg-4">
@@ -90,6 +90,61 @@
                 <a href="{% url 'shop:shop' %}" class="btn btn-primary rounded-pill d-flex align-items-center justify-content-center" style="background-color: #265e54;">
                     SHOP NOW
                 </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+
+    <div class="col-lg-3">
+        <img src="{% static 'images/ceo.jpg' %}" alt="Maya Cole" style = "border-radius: 150px; width: 200px; border-left: 150px;" class="img-fluid">
+        <div class = "text-center">
+            <h5>Maya Cole</h5>
+            <p style="border-top: -1px;">Marketing Director</p>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <svg xmlns="http://www.w3.org/2000/svg" center-left="0px" width="60" height="60" fill="currentColor" class="bi bi-quote" viewBox="0 0 16 16" style="color: #265e54;">
+            <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
+          </svg>
+        <div class = "text-center">
+        <h6 style="color: #265e54; margin-top: 30px; ">RevitAge's energy vitamins have been a game-changer for me.As someone leading a busy lifestyle, i needed a natural boost to keep up with my daily activities. Since I started taking RevitAge, I've experienced a significant increase in my energy levels, allowing me to stay focused and productive throughout the day. I highly recommend RevitAge to anyone looking to recharge their energy and embrace a vibrant, fulfilling life."</d>
+        </div>
+    </div>
+ 
+</div>
+
+<div class="row mt-2">
+    <h4 class="text-center" style="color: #134f13;">Latest From Our Blog</h4>
+
+
+    <div class="col-lg-4">
+        <div class="card" style="background-color: #fff; border: none; transform: scale(0.7);">
+            <img src="{% static 'images/food.jpg' %}" class="card-img-top" alt="Blog title">
+            <div class="card-body">
+                <h5 class="card-title text-center" style="color: #000;">Blog post title</h5>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card" style="background-color: #fff; border: none; transform: scale(0.7);">
+            <img src="{% static 'images/food.jpg' %}" class="card-img-top" alt="Blog title">
+            <div class="card-body">
+                <h5 class="card-title text-center" style="color: #000;">Blog post title</h5>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card" style="background-color: #fff; border: none; transform: scale(0.7);">
+            <img src="{% static 'images/food.jpg' %}" class="card-img-top" alt="Blog title">
+            <div class="card-body">
+                <h5 class="card-title text-center" style="color: #000;">Blog post title</h5>
+                
+
             </div>
         </div>
     </div>
@@ -134,7 +189,7 @@
                             <li><a href="{% url 'shop:blog' %}">Blog</a></li>
                         </ul>
                     </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-6">
                         <h6 class="footer-heading mt-5">HELP</h6>
                         <ul class="footer-links">
                             <li><a href="#">Customer Support</a></li>
@@ -163,7 +218,7 @@
 <style>
     .footer {
         margin-top: 50px;
-        padding: 30px 0;
+        padding: 20px 0;
     }
 
     .footer .footer-heading {
