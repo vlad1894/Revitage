@@ -1,0 +1,66 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        
+
+        h1 {
+            color: #134f13;
+            text-align: center;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            text-align: justify;
+        }
+
+        .highlight-text {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #134f13;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+
+    <div class="container">
+        <h1>Welcome to RevitAge</h1>
+        <p>Embark on a transformative journey to revitalize your life and embrace the new you. At RevitAge, we understand the unique needs of women seeking to recharge their energy and cultivate a life of holistic wellness.</p>
+        
+        <p>Our commitment to empowering women is reflected in our <span class="highlight-text">advanced energy boost</span> solutions tailored exclusively for you. We believe that every woman deserves to feel vibrant, energized, and confident in her own skin. With RevitAge, unlock a new level of vitality that empowers you to live life to its fullest.</p>
+        
+        <p>Why choose RevitAge? Our cutting-edge approach to holistic well-being goes beyond conventional methods. We combine innovative technologies with a deep understanding of women's health to provide personalized solutions that address your specific needs. Whether you're navigating the demands of a busy lifestyle or looking to enhance your overall well-being, our products are designed to support you on your journey.</p>
+        
+        <p>RevitAge is more than just a brand; it's a lifestyle. We believe in the power of transformation and the strength that comes from embracing a life of wellness. Our mission is to help you rediscover your energy, revitalize your spirit, and embrace the limitless possibilities that come with a revitalized life.</p>
+        
+        <p>Join the community of empowered women who have chosen RevitAge to enhance their well-being. Together, let's redefine what it means to live life with vitality and embrace the radiant energy that comes with being the best version of yourself.</p>
+        
+        <p><span class="highlight-text">Revitalize your life, embrace the new you</span> – because at RevitAge, your well-being is our priority.</p>
+        
+        <a href="{% url 'shop:shop' %}" class="button">Learn More</a>
+    </div>
+{% endblock %}
