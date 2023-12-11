@@ -1,18 +1,81 @@
 {% extends 'shop/base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="row mt-5">
-    {% for product in products %}
-    <div class="col-lg-4 mb-4">
-        <div class="card">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">{{ product.description }}</p>
-                <a href="{% url 'shop:add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a>
-            </div>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fluid {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #265e54;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border: none;
+            transform: scale(0.9);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.0);
+        }
+
+        .card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .card-title {
+            color: #265e54;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            color: #333;
+        }
+
+        .btn-add-to-cart {
+            background-color: #265e54;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-add-to-cart:hover {
+            background-color: #1a4541;
+        }
+    </style>
+
+    <div class="container-fluid">
+        <h2>Explore Our Products</h2>
+
+        <div class="row mt-3">
+            {% for product in products %}
+                <div class="col-lg-4 mb-4">
+                    <div class="card">
+                        <img src="{% static 'images/product.jpg' %}" alt="{{ product.name }}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <a href="{% url 'shop:add_to_cart' product.id %}" class="btn btn-add-to-cart rounded-pill">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
-</div>
 {% endblock %}
