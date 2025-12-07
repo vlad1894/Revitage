@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: revitage-web
+    volumes:
+      - static_volume:/staticfiles
+      - media_volume:/media
+    expose:
+      - "8000"
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: revitage-nginx
+    ports:
+      - "8000:80"
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/staticfiles
+      - media_volume:/media
+
+volumes:
+  static_volume:
+  media_volume:
