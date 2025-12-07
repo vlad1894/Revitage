@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: revitage
+  labels:
+    app: revitage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: revitage
+  template:
+    metadata:
+      labels:
+        app: revitage
+    spec:
+      containers:
+        - name: revitage
+          image: vlad1894/revitage:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://admin:supersecurepassword@mongodb.mongodb.svc.cluster.local:27017/"
+            - name: DB_NAME
+              value: "revitage"
+          Optional but nice to have later:
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 30
