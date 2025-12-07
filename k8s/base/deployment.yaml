@@ -16,10 +16,12 @@ spec:
     spec:
       containers:
         - name: revitage
-          image: vlad1894/revitage:latest
-          imagePullPolicy: IfNotPresent
+          image: vlad1894/my-repo:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
+      imagePullSecrets:
+        - name: dockerhub-secret      
           env:
             - name: MONGO_URI
               value: "mongodb://admin:supersecurepassword@mongodb.mongodb.svc.cluster.local:27017/"
