@@ -115,6 +115,13 @@ USE_L10N = True
 USE_TZ = True
 
 
+MONGO_URI = os.environ.get(
+    "MONGO_URI",
+    "mongodb://admin:supersecurepassword@mongodb.mongodb.svc.cluster.local:27017/"
+)
+
+MONGO_DB_NAME = os.environ.get("MONGO_DB_NAME", "revitage")
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
