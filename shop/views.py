@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Product, Cart, CartItem, Subscription
 from .forms import ProductForm
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import Product, Cart, CartItem, Subscription
+from .mongo import create_user, authenticate_user
 
 def home(request):
     return render(request, 'shop/index.html')
@@ -73,4 +75,55 @@ def blog(request):
     return render(request, 'shop/blog.html')
 
 
+def register(request):
+    if request.method == "POST":
+        full_name = request.POST.get("full_name") or ""
+        email = request.POST.get("email") or ""
+        password = request.POST.get("password") or ""
+        password2 = request.POST.get("password2") or ""
+
+        if not email or not password:
+            messages.error(request, "Email and password are required.")
+            return render(request, "shop/register.html")
+
+        if password != password2:
+            messages.error(request, "Passwords do not match.")
+            return render(request, "shop/register.html")
+
+        try:
+            user = create_user(email=email, password=password, full_name=full_name)
+        except ValueError as e:
+            messages.error(request, str(e))
+            return render(request, "shop/register.html")
+
+        messages.success(request, "Account created. You can log in now.")
+        return redirect("login")
+
+    return render(request, "shop/register.html")
+
+
+def login_view(request):
+    if request.method == "POST":
+        email = request.POST.get("email") or ""
+        password = request.POST.get("password") or ""
+
+        user = authenticate_user(email=email, password=password)
+        if not user:
+            messages.error(request, "Invalid email or password.")
+            return render(request, "shop/login.html")
+
+        # store minimal info in session
+        request.session["user_id"] = str(user["_id"])
+        request.session["user_email"] = user["email"]
+
+        messages.success(request, "Logged in successfully.")
+        return redirect("shop")  # go to product listing
+
+    return render(request, "shop/login.html")
+
+
+def logout_view(request):
+    request.session.flush()
+    messages.info(request, "You have been logged out.")
+    return redirect("home")
 # Create your views here.
