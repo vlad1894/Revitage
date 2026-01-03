@@ -19,7 +19,9 @@ def about(request):
 
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    cart, created = Cart.objects.get_or_create(user=request.user)
+    if not request.session.session_key:
+        request.session.save()
+    cart, created = Cart.objects.get_or_create(session_id=request.session.session_key)
     cart_item = cart.items.filter(product=product).first()
     if cart_item:
         cart_item.quantity += 1
@@ -45,10 +47,12 @@ def subscribe_newsletter(request):
         subscription.save()
         
         return render(request, 'shop/index.html')
-    return render(render, 'shop/index.html')
+    return render(request, 'shop/index.html')
 
 
 def cart_view(request):
+    if not request.session.session_key:
+        request.session.save()
     session_id = request.session.session_key
     
     cart = Cart.objects.filter(session_id=session_id).first()
@@ -125,5 +129,5 @@ def login_view(request):
 def logout_view(request):
     request.session.flush()
     messages.info(request, "You have been logged out.")
-    return redirect("home")
+    return redirect("shop:home")
 # Create your views here.
