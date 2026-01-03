@@ -118,12 +118,13 @@ def blog(request):
 def register(request):
     if request.method == "POST":
         full_name = request.POST.get("full_name") or ""
+        username = request.POST.get("username") or ""
         email = request.POST.get("email") or ""
         password = request.POST.get("password") or ""
         password2 = request.POST.get("password2") or ""
 
-        if not email or not password:
-            messages.error(request, "Email and password are required.")
+        if not username or not email or not password:
+            messages.error(request, "Username, email, and password are required.")
             return render(request, "shop/register.html")
 
         if password != password2:
@@ -131,7 +132,7 @@ def register(request):
             return render(request, "shop/register.html")
 
         try:
-            user = create_user(email=email, password=password, full_name=full_name)
+            user = create_user(username=username, email=email, password=password, full_name=full_name)
         except ValueError as e:
             messages.error(request, str(e))
             return render(request, "shop/register.html")
@@ -144,17 +145,18 @@ def register(request):
 
 def login_view(request):
     if request.method == "POST":
-        email = request.POST.get("email") or ""
+        username = request.POST.get("username") or ""
         password = request.POST.get("password") or ""
 
-        user = authenticate_user(email=email, password=password)
+        user = authenticate_user(username_or_email=username, password=password)
         if not user:
-            messages.error(request, "Invalid email or password.")
+            messages.error(request, "Invalid username or password.")
             return render(request, "shop/login.html")
 
         # store minimal info in session
         request.session["user_id"] = str(user["_id"])
-        request.session["user_email"] = user["email"]
+        request.session["user_email"] = user.get("email", "")
+        request.session["user_name"] = user.get("username", "")
 
         messages.success(request, "Logged in successfully.")
         return redirect("shop:shop")  # go to product listing
@@ -176,6 +178,7 @@ def account_view(request):
     context = {
         "user_id": request.session.get("user_id", ""),
         "user_email": request.session.get("user_email", ""),
+        "user_name": request.session.get("user_name", ""),
     }
     return render(request, "shop/account.html", context)
 # Create your views here.

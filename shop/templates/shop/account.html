@@ -10,7 +10,7 @@
             </div>
             <div class="account-identity">
                 <h2>Welcome back</h2>
-                <p class="account-email">{{ user_email }}</p>
+                <p class="account-email">{{ user_name|default:user_email }}</p>
                 <div class="account-badges">
                     <span class="account-badge">Revitage Member</span>
                     <span class="account-badge alt">Wellness Tier</span>
@@ -35,6 +35,10 @@
                     <div>
                         <p class="account-label">Email</p>
                         <p class="account-value">{{ user_email }}</p>
+                    </div>
+                    <div>
+                        <p class="account-label">Username</p>
+                        <p class="account-value">{{ user_name }}</p>
                     </div>
                     <div>
                         <p class="account-label">Status</p>

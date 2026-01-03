@@ -40,6 +40,7 @@ spec:
             - >
               mongosh "$MONGO_URI" --eval
               'db = db.getSiblingDB(process.env.MONGO_DB_NAME);
+              db.users.createIndex({username: 1}, {unique: true});
               db.users.createIndex({email: 1}, {unique: true});
               db.products.createIndex({name: 1});
               db.carts.createIndex({updated_at: 1});'

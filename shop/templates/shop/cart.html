@@ -19,10 +19,9 @@
                     <tr>
                         <td>{{ item.product.name }}</td>
                         <td>
-                            <form method="post" action="{% url 'shop:update_cart_item' item.id %}" class="d-flex align-items-center">
+                            <form method="post" action="{% url 'shop:update_cart_item' item.id %}" class="d-flex align-items-center auto-update">
                                 {% csrf_token %}
                                 <input type="number" name="quantity" min="0" value="{{ item.quantity }}" class="form-control form-control-sm" style="max-width: 80px;">
-                                <button type="submit" class="btn btn-sm btn-success ms-2">Update</button>
                             </form>
                         </td>
                         <td>€{{ item.product.price }}</td>
@@ -42,4 +41,14 @@
     {% else %}
         <p>Your cart is empty.</p>
     {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.querySelectorAll(".auto-update input[name='quantity']").forEach((input) => {
+        input.addEventListener("change", () => {
+            input.closest("form").submit();
+        });
+    });
+</script>
 {% endblock %}

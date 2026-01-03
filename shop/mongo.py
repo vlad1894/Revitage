@@ -15,13 +15,17 @@ users_collection = db["users"]
 products_collection = db["products"]  # we'll use this later for catalog, if you want
 
 
-def create_user(email: str, password: str, full_name: str | None = None):
+def create_user(username: str, email: str, password: str, full_name: str | None = None):
     try:
-        existing = users_collection.find_one({"email": email})
-        if existing:
+        existing_username = users_collection.find_one({"username": username})
+        if existing_username:
+            raise ValueError("Username already taken")
+        existing_email = users_collection.find_one({"email": email})
+        if existing_email:
             raise ValueError("Email already registered")
 
         user_doc = {
+            "username": username,
             "email": email,
             "password_hash": make_password(password),
             "full_name": full_name,
@@ -35,9 +39,11 @@ def create_user(email: str, password: str, full_name: str | None = None):
         raise ValueError("Database unavailable. Please try again.") from exc
 
 
-def authenticate_user(email: str, password: str):
+def authenticate_user(username_or_email: str, password: str):
     try:
-        user = users_collection.find_one({"email": email})
+        user = users_collection.find_one({"username": username_or_email})
+        if not user:
+            user = users_collection.find_one({"email": username_or_email})
         if not user:
             return None
 
