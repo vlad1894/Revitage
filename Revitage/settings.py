@@ -128,6 +128,8 @@ MONGO_URI = os.environ.get(
 
 MONGO_DB_NAME = os.environ.get("MONGO_DB_NAME", "revitage")
 
+BLOG_ADMIN_USERNAME = os.environ.get("BLOG_ADMIN_USERNAME", "admin")
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 

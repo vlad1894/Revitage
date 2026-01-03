@@ -1,8 +1,9 @@
 from .forms import ProductForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.conf import settings
 from .models import Product, Cart, CartItem, Subscription
-from .mongo import create_user, authenticate_user
+from .mongo import create_user, authenticate_user, create_blog_post, list_blog_posts
 
 def home(request):
     return render(request, 'shop/index.html')
@@ -112,7 +113,29 @@ def remove_cart_item(request, item_id):
 
 
 def blog(request):
-    return render(request, 'shop/blog.html')
+    posts = list_blog_posts()
+    if not posts:
+        posts = [
+            {
+                "title": "Product 1 Rituals: Morning Energy in 3 Steps",
+                "category": "Energy Reset",
+                "excerpt": "Start with hydration, follow with a light protein breakfast, and add your daily Revitage blend.",
+                "body": "Small, consistent habits beat big resets every time. Pair your morning ritual with a short walk to lock it in.",
+            },
+            {
+                "title": "Product 2 Focus Windows: Protect Your Best Hours",
+                "category": "Focus Formula",
+                "excerpt": "Build a 90-minute focus window: silence alerts and stack your most important task first.",
+                "body": "A calm routine makes focus stick. Keep water nearby and set a single intent for the session.",
+            },
+            {
+                "title": "Product 3 Evening Wind-Down: A Softer Landing",
+                "category": "Calm Balance",
+                "excerpt": "Ease into the evening with dim lights and a device-free 15 minutes before bed.",
+                "body": "Add a short stretch and warm tea to reduce stimulation and improve sleep quality.",
+            },
+        ]
+    return render(request, 'shop/blog.html', {"posts": posts})
 
 
 def register(request):
@@ -181,4 +204,32 @@ def account_view(request):
         "user_name": request.session.get("user_name", ""),
     }
     return render(request, "shop/account.html", context)
+
+
+def blog_admin(request):
+    if not request.session.get("user_name"):
+        messages.info(request, "Please log in to continue.")
+        return redirect("shop:login")
+    if request.session.get("user_name") != settings.BLOG_ADMIN_USERNAME:
+        messages.error(request, "You do not have access to blog admin.")
+        return redirect("shop:blog")
+
+    if request.method == "POST":
+        title = request.POST.get("title") or ""
+        category = request.POST.get("category") or ""
+        excerpt = request.POST.get("excerpt") or ""
+        body = request.POST.get("body") or ""
+
+        if not title or not body:
+            messages.error(request, "Title and body are required.")
+        else:
+            try:
+                create_blog_post(title=title, category=category, excerpt=excerpt, body=body)
+                messages.success(request, "Blog post published.")
+                return redirect("shop:blog_admin")
+            except ValueError as exc:
+                messages.error(request, str(exc))
+
+    posts = list_blog_posts()
+    return render(request, "shop/blog_admin.html", {"posts": posts})
 # Create your views here.

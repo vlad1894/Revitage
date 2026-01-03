@@ -1,6 +1,7 @@
 from pymongo import MongoClient, errors
 from django.conf import settings
 from django.contrib.auth.hashers import make_password, check_password
+from datetime import datetime, timezone
 
 
 client = MongoClient(
@@ -13,6 +14,7 @@ db = client[settings.MONGO_DB_NAME]
 
 users_collection = db["users"]
 products_collection = db["products"]  # we'll use this later for catalog, if you want
+blog_posts_collection = db["blog_posts"]
 
 
 def create_user(username: str, email: str, password: str, full_name: str | None = None):
@@ -53,3 +55,26 @@ def authenticate_user(username_or_email: str, password: str):
         return user
     except errors.PyMongoError:
         return None
+
+
+def create_blog_post(title: str, category: str, excerpt: str, body: str):
+    try:
+        doc = {
+            "title": title,
+            "category": category,
+            "excerpt": excerpt,
+            "body": body,
+            "created_at": datetime.now(timezone.utc),
+        }
+        result = blog_posts_collection.insert_one(doc)
+        doc["_id"] = result.inserted_id
+        return doc
+    except errors.PyMongoError as exc:
+        raise ValueError("Database unavailable. Please try again.") from exc
+
+
+def list_blog_posts():
+    try:
+        return list(blog_posts_collection.find().sort("created_at", -1))
+    except errors.PyMongoError:
+        return []

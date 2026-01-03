@@ -1,0 +1,52 @@
+{% extends "shop/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Blog Admin</h2>
+
+  {% if messages %}
+    {% for m in messages %}
+      <div class="alert alert-{{ m.tags }}">{{ m }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="card p-4 mb-4">
+    <h5>Create a new article</h5>
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <input type="text" name="category" class="form-control" placeholder="Energy Reset">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Excerpt</label>
+        <textarea name="excerpt" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Body</label>
+        <textarea name="body" class="form-control" rows="6" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Publish</button>
+    </form>
+  </div>
+
+  <div class="card p-4">
+    <h5>Existing articles</h5>
+    {% if posts %}
+      <ul class="list-group list-group-flush">
+        {% for post in posts %}
+          <li class="list-group-item">
+            <strong>{{ post.title }}</strong>
+            {% if post.category %}<span class="text-muted"> — {{ post.category }}</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No articles yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

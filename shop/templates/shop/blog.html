@@ -10,6 +10,7 @@
         .logo-container {
             display: flex;
             align-items: center;
+            margin-bottom: 20px;
         }
 
         .logo {
@@ -22,20 +23,68 @@
             font-size: 24px; /* Adjust the font size as needed */
             color: #265e54;
         }
+
+        .blog-shell {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px 40px;
+            color: #265e54;
+            font-family: Arial, sans-serif;
+        }
+
+        .blog-intro {
+            margin-bottom: 30px;
+        }
+
+        .blog-article {
+            background: #f4f6f3;
+            border-radius: 18px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 24px rgba(19, 79, 19, 0.08);
+        }
+
+        .blog-article h3 {
+            margin-top: 0;
+            color: #134f13;
+        }
+
+        .blog-meta {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(38, 94, 84, 0.7);
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
-    <div class="logo-container">
-        <a href="{% url 'shop:home' %}">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
-        </a>
-        <h1> A Wellness Blog</h1>
-    </div>
+    <div class="blog-shell">
+        <div class="logo-container">
+            <a href="{% url 'shop:home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+            </a>
+            <h1> A Wellness Blog</h1>
+        </div>
 
-    <div>
-        <h4>
-            Welcome to our blog! Here you'll find our latest articles and news.
-        </h4>
+        <div class="blog-intro">
+            <h4>
+                Welcome to our blog! Here you'll find our latest articles and news.
+            </h4>
+        </div>
+
+        {% for post in posts %}
+            <article id="article-{{ forloop.counter }}" class="blog-article">
+                <p class="blog-meta">{{ post.category|default:"Revitage Notes" }}</p>
+                <h3>{{ post.title }}</h3>
+                {% if post.excerpt %}
+                    <p>{{ post.excerpt }}</p>
+                {% endif %}
+                {% if post.body %}
+                    <p>{{ post.body }}</p>
+                {% endif %}
+            </article>
+        {% endfor %}
     </div>
 
 </body>
