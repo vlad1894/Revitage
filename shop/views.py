@@ -97,7 +97,7 @@ def register(request):
             return render(request, "shop/register.html")
 
         messages.success(request, "Account created. You can log in now.")
-        return redirect("login")
+        return redirect("shop:login")
 
     return render(request, "shop/register.html")
 
