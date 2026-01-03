@@ -1,0 +1,303 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="account-shell">
+    <div class="account-hero">
+        <div class="account-hero-inner">
+            <div class="account-avatar">
+                <span class="account-avatar-text">{{ user_email|default:"Member" |slice:":1"|upper }}</span>
+            </div>
+            <div class="account-identity">
+                <h2>Welcome back</h2>
+                <p class="account-email">{{ user_email }}</p>
+                <div class="account-badges">
+                    <span class="account-badge">Revitage Member</span>
+                    <span class="account-badge alt">Wellness Tier</span>
+                </div>
+            </div>
+            <div class="account-actions">
+                <a href="{% url 'shop:shop' %}" class="btn btn-primary rounded-pill account-cta">Shop Now</a>
+                <a href="{% url 'shop:blog' %}" class="btn btn-outline-light rounded-pill account-cta-alt">Read the Blog</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-8">
+            <div class="account-card">
+                <h4>Profile Highlights</h4>
+                <div class="account-grid">
+                    <div>
+                        <p class="account-label">Member ID</p>
+                        <p class="account-value">{{ user_id }}</p>
+                    </div>
+                    <div>
+                        <p class="account-label">Email</p>
+                        <p class="account-value">{{ user_email }}</p>
+                    </div>
+                    <div>
+                        <p class="account-label">Status</p>
+                        <p class="account-value">Active</p>
+                    </div>
+                    <div>
+                        <p class="account-label">Next Delivery</p>
+                        <p class="account-value">Customize your plan</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account-card mt-4">
+                <h4>Recent Activity</h4>
+                <div class="account-activity">
+                    <div class="account-activity-item">
+                        <span class="dot"></span>
+                        <div>
+                            <p class="account-value">Signed in to Revitage</p>
+                            <p class="account-label">Just now</p>
+                        </div>
+                    </div>
+                    <div class="account-activity-item">
+                        <span class="dot"></span>
+                        <div>
+                            <p class="account-value">Account created</p>
+                            <p class="account-label">Today</p>
+                        </div>
+                    </div>
+                    <div class="account-activity-item">
+                        <span class="dot"></span>
+                        <div>
+                            <p class="account-value">Wishlist ready</p>
+                            <p class="account-label">Add products anytime</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="account-card">
+                <h4>Quick Stats</h4>
+                <div class="account-stats">
+                    <div>
+                        <p class="account-number">0</p>
+                        <p class="account-label">Orders</p>
+                    </div>
+                    <div>
+                        <p class="account-number">0</p>
+                        <p class="account-label">Subscriptions</p>
+                    </div>
+                    <div>
+                        <p class="account-number">0</p>
+                        <p class="account-label">Saved Items</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="account-card mt-4">
+                <h4>Personalized Picks</h4>
+                <p class="account-label">We are curating wellness blends for you.</p>
+                <div class="account-pick">
+                    <img src="{% static 'images/product.jpg' %}" alt="Revitage product" class="account-pick-image">
+                    <div>
+                        <p class="account-value">Revitage Core</p>
+                        <p class="account-label">Daily vitality formula</p>
+                    </div>
+                </div>
+                <a href="{% url 'shop:shop' %}" class="btn btn-success rounded-pill account-cta account-cta-alt">Explore Products</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --revitage-green: #134f13;
+        --revitage-teal: #265e54;
+        --revitage-mint: #38aa95;
+        --revitage-soft: #9db7b2;
+        --revitage-cream: #f4f6f3;
+    }
+
+    .account-shell {
+        padding: 10px 0 40px;
+    }
+
+    .account-hero {
+        background: linear-gradient(135deg, rgba(56, 170, 149, 0.22), rgba(19, 79, 19, 0.2)), radial-gradient(circle at top right, #ffffff 0%, #f4f6f3 55%, #e4efe9 100%);
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 20px 50px rgba(19, 79, 19, 0.12);
+    }
+
+    .account-hero-inner {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .account-avatar {
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #265e54, #38aa95);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 12px 28px rgba(38, 94, 84, 0.35);
+    }
+
+    .account-avatar-text {
+        color: #fff;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+    .account-identity h2 {
+        color: var(--revitage-teal);
+        margin-bottom: 6px;
+    }
+
+    .account-email {
+        color: #2c2c2c;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .account-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .account-badge {
+        background: rgba(19, 79, 19, 0.12);
+        color: var(--revitage-green);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 12px;
+        letter-spacing: 0.6px;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .account-badge.alt {
+        background: rgba(38, 94, 84, 0.15);
+        color: var(--revitage-teal);
+    }
+
+    .account-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .account-cta {
+        background-color: var(--revitage-green);
+        border: none;
+        padding: 10px 22px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .account-cta-alt {
+        border: 1px solid rgba(38, 94, 84, 0.4);
+        color: var(--revitage-teal);
+        background-color: transparent;
+    }
+
+    .account-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 14px 30px rgba(19, 79, 19, 0.08);
+    }
+
+    .account-card h4 {
+        color: var(--revitage-teal);
+        margin-bottom: 18px;
+    }
+
+    .account-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px;
+    }
+
+    .account-label {
+        color: rgba(38, 94, 84, 0.7);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+    }
+
+    .account-value {
+        color: #1c1c1c;
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .account-activity {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .account-activity-item {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .account-activity-item .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--revitage-mint);
+        margin-top: 6px;
+        box-shadow: 0 0 0 6px rgba(56, 170, 149, 0.2);
+    }
+
+    .account-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        text-align: center;
+    }
+
+    .account-number {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--revitage-green);
+        margin-bottom: 0;
+    }
+
+    .account-pick {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        background: var(--revitage-cream);
+        border-radius: 16px;
+        padding: 12px;
+        margin: 16px 0;
+    }
+
+    .account-pick-image {
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        object-fit: cover;
+    }
+
+    @media (max-width: 991px) {
+        .account-actions {
+            width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    }
+</style>
+{% endblock %}

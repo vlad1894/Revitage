@@ -130,4 +130,16 @@ def logout_view(request):
     request.session.flush()
     messages.info(request, "You have been logged out.")
     return redirect("shop:home")
+
+
+def account_view(request):
+    if not request.session.get("user_id"):
+        messages.info(request, "Please log in to view your account.")
+        return redirect("shop:login")
+
+    context = {
+        "user_id": request.session.get("user_id", ""),
+        "user_email": request.session.get("user_email", ""),
+    }
+    return render(request, "shop/account.html", context)
 # Create your views here.

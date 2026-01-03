@@ -48,6 +48,9 @@
 
                     {% if request.session.user_id %}
                         <li class="nav-item">
+                            <a class="nav-link" href="{% url 'shop:account' %}" style="font-weight: bold;">Account</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{% url 'shop:logout' %}" style="font-weight: bold;">Logout</a>
                         </li>
                     {% else %}
