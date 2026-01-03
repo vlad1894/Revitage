@@ -29,7 +29,7 @@ def add_to_cart(request, product_id):
     else:
         new_cart_item = CartItem(cart=cart, product=product, quantity=1)
         new_cart_item.save()
-    return render(request, 'shop/base.html', {'cart': cart})
+    return redirect("shop:cart")
 
 
 
@@ -71,6 +71,42 @@ def cart_view(request):
     }
 
     return render(request, 'shop/cart.html', context)
+
+
+def update_cart_item(request, item_id):
+    if request.method != "POST":
+        return redirect("shop:cart")
+
+    if not request.session.session_key:
+        request.session.save()
+    session_id = request.session.session_key
+
+    cart_item = get_object_or_404(CartItem, pk=item_id, cart__session_id=session_id)
+    try:
+        quantity = int(request.POST.get("quantity", cart_item.quantity))
+    except (TypeError, ValueError):
+        quantity = cart_item.quantity
+
+    if quantity <= 0:
+        cart_item.delete()
+    else:
+        cart_item.quantity = quantity
+        cart_item.save()
+
+    return redirect("shop:cart")
+
+
+def remove_cart_item(request, item_id):
+    if request.method != "POST":
+        return redirect("shop:cart")
+
+    if not request.session.session_key:
+        request.session.save()
+    session_id = request.session.session_key
+
+    cart_item = get_object_or_404(CartItem, pk=item_id, cart__session_id=session_id)
+    cart_item.delete()
+    return redirect("shop:cart")
 
 
 

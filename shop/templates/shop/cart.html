@@ -11,23 +11,34 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in cart_items %}
-                    {% with item_total=item.quantity|add:0|default_if_none:0 %}
-                        <tr>
-                            <td>{{ item.product.name }}</td>
-                            <td>{{ item.quantity }}</td>
-                            <td>${{ item.product.price }}</td>
-                            <td>${{ item_total }}</td>
-                        </tr>
-                    {% endwith %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>
+                            <form method="post" action="{% url 'shop:update_cart_item' item.id %}" class="d-flex align-items-center">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" min="0" value="{{ item.quantity }}" class="form-control form-control-sm" style="max-width: 80px;">
+                                <button type="submit" class="btn btn-sm btn-success ms-2">Update</button>
+                            </form>
+                        </td>
+                        <td>€{{ item.product.price }}</td>
+                        <td>€{{ item.get_total_price }}</td>
+                        <td>
+                            <form method="post" action="{% url 'shop:remove_cart_item' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
 
-        <h4>Total: ${{ total_price|floatformat:2 }}</h4>
+        <h4>Total: €{{ total_price|floatformat:2 }}</h4>
     {% else %}
         <p>Your cart is empty.</p>
     {% endif %}
