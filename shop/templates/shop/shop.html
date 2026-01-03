@@ -71,6 +71,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
                             <p class="card-text">{{ product.description }}</p>
+                            <p class="card-text"><strong>EUR {{ product.price }}</strong></p>
                             <a href="{% url 'shop:add_to_cart' product.id %}" class="btn btn-add-to-cart rounded-pill">Add to Cart</a>
                         </div>
                     </div>

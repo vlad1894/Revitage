@@ -29,8 +29,8 @@
                 <h4>Profile Highlights</h4>
                 <div class="account-grid">
                     <div>
-                        <p class="account-label">Member ID</p>
-                        <p class="account-value">{{ user_id }}</p>
+                        <p class="account-label">Member ID (Last 6)</p>
+                        <p class="account-value">••••••{{ user_id|slice:"-6:" }}</p>
                     </div>
                     <div>
                         <p class="account-label">Email</p>
