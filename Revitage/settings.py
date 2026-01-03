@@ -25,7 +25,13 @@ SECRET_KEY = '(-*5vb@crve#9)uj7av78l9n%4n68)dx4^&3o)%v(axidjgo2d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+raw_allowed_hosts = os.environ.get("ALLOWED_HOSTS", "").strip()
+if not raw_allowed_hosts:
+    ALLOWED_HOSTS = ["*"]
+elif raw_allowed_hosts == "*":
+    ALLOWED_HOSTS = ["*"]
+else:
+    ALLOWED_HOSTS = [host.strip() for host in raw_allowed_hosts.split(",") if host.strip()]
 
 
 # Application definition

@@ -35,6 +35,8 @@ spec:
               value: "mongodb://$(MONGO_USERNAME):$(MONGO_PASSWORD)@mongodb.mongodb.svc.cluster.local:27017/"
             - name: MONGO_DB_NAME
               value: "revitage"
+            - name: ALLOWED_HOSTS
+              value: "*"
           readinessProbe:
             httpGet:
               path: /
