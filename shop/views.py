@@ -117,7 +117,7 @@ def login_view(request):
         request.session["user_email"] = user["email"]
 
         messages.success(request, "Logged in successfully.")
-        return redirect("shop")  # go to product listing
+        return redirect("shop:shop")  # go to product listing
 
     return render(request, "shop/login.html")
 
