@@ -29,7 +29,7 @@ def add_to_cart(request, product_id):
     else:
         new_cart_item = CartItem(cart=cart, product=product, quantity=1)
         new_cart_item.save()
-    return redirect("shop:cart")
+    return redirect(request.META.get("HTTP_REFERER", "shop:shop"))
 
 
 
