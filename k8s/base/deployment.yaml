@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: revitage
-          image: vlad1894/my-repo:revitage-fix-01
+          image: vlad1894/my-repo:revitage.1.1
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
