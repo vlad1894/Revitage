@@ -180,6 +180,7 @@ def login_view(request):
         request.session["user_id"] = str(user["_id"])
         request.session["user_email"] = user.get("email", "")
         request.session["user_name"] = user.get("username", "")
+        request.session["is_blog_admin"] = user.get("username") == settings.BLOG_ADMIN_USERNAME
 
         messages.success(request, "Logged in successfully.")
         return redirect("shop:shop")  # go to product listing
