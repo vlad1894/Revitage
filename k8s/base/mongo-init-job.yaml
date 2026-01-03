@@ -1,25 +1,24 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: revitage
+  name: revitage-mongo-init
   labels:
     app: revitage
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: revitage
+  backoffLimit: 3
   template:
     metadata:
       labels:
         app: revitage
     spec:
+      restartPolicy: OnFailure
       containers:
-        - name: revitage
-          image: vlad1894/my-repo:latest
+        - name: mongo-init
+          image: mongo:6
           imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8000
           env:
             - name: MONGO_USERNAME
               valueFrom:
@@ -35,17 +34,12 @@ spec:
               value: "mongodb://$(MONGO_USERNAME):$(MONGO_PASSWORD)@mongodb.mongodb.svc.cluster.local:27017/"
             - name: MONGO_DB_NAME
               value: "revitage"
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 8000
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 8000
-            initialDelaySeconds: 30
-            periodSeconds: 30
-      imagePullSecrets:
-        - name: dockerhub-secret
+          command:
+            - bash
+            - -lc
+            - >
+              mongosh "$MONGO_URI" --eval
+              'db = db.getSiblingDB(process.env.MONGO_DB_NAME);
+              db.users.createIndex({email: 1}, {unique: true});
+              db.products.createIndex({name: 1});
+              db.carts.createIndex({updated_at: 1});'

@@ -3,4 +3,5 @@ kind: Kustomization
 
 resources:
   - deployment.yaml
+  - mongo-init-job.yaml
   - service.yaml
