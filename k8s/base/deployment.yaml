@@ -17,7 +17,7 @@ spec:
       containers:
         - name: revitage
           image: vlad1894/my-repo:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
